@@ -78,7 +78,7 @@ initMap = () => {
         scrollWheelZoom: false
       });
   L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.jpg70?access_token={mapboxToken}', {
-    mapboxToken: '<your MAPBOX API KEY HERE>',
+    mapboxToken: 'pk.eyJ1IjoiZ2VuZXNpczE3IiwiYSI6ImNqdW0zNWx4bjAzcmIzeXBpdWIzOWdrOHQifQ.U_5xsxiU55ki-Ag91c_8WQ',
     maxZoom: 18,
     attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, ' +
       '<a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, ' +
@@ -160,6 +160,7 @@ createRestaurantHTML = (restaurant) => {
 
   const image = document.createElement('img');
   image.className = 'restaurant-img';
+  image.alt = restaurant.name;
   image.src = DBHelper.imageUrlForRestaurant(restaurant);
   li.append(image);
 
@@ -198,14 +199,24 @@ addMarkersToMap = (restaurants = self.restaurants) => {
   });
 
 } 
-/* addMarkersToMap = (restaurants = self.restaurants) => {
-  restaurants.forEach(restaurant => {
-    // Add marker to the map
-    const marker = DBHelper.mapMarkerForRestaurant(restaurant, self.map);
-    google.maps.event.addListener(marker, 'click', () => {
-      window.location.href = marker.url
+// Adding the service worker 
+
+if('serviceWorker' in navigator) {
+  
+  navigator.serviceWorker.register('./sw.js')
+  .then((reg) => {
+    //registration working
+    if(reg.installing) {
+      console.log('Servive worker installing');
+    } else if(reg.waiting) {
+      console.log('Service worker installed');
+    } else if(reg.active) {
+      console.log('Service worker active');
+    }
+      console.log('Registration succeeded. Scope is ' + reg.scope);
+  }).catch((error) => {
+    //registration not working
+    console.log('registration failed with ' + error);
     });
-    self.markers.push(marker);
-  });
-} */
+}
 
