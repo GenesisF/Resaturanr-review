@@ -62,23 +62,6 @@ self.addEventListener('activate', function (event) {
 
   })());
    
-  // I wrote this promise before use asyn fucntion  
-  
-  /* event.waitUntil(
-    caches.keys().then(async function (cacheNames) {
-      try {
-        return Promise.all(cacheNames.filter(function (cacheName) {
-          return cacheName.startsWith('restaurant-') &&
-            cacheName != staticCacheName;
-        }).map(function (cacheName) {
-          return caches.delate(cacheName);
-        }));
-      }
-      catch (error) {
-        console.error(error);
-      }
-    })
-  ); */
 });
 
 // If is Offline it will handle the return request of the main page
